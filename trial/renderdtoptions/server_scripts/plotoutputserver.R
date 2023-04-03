@@ -16,7 +16,7 @@ observeEvent(input$file1,{
   output$listx <- renderUI({pickerInput(inputId = "selectx",label = "x軸を選択",choices = colnames(csfile()))})
   output$listy <- renderUI({pickerInput(inputId = "selecty",label = "y軸を選択",choices = colnames(csfile()))})
   output$table <- renderTable(head(csfile()))
-  })
+})
 output$scatterplot <- renderPlot({
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+

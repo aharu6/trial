@@ -14,13 +14,17 @@ plotoutputTab <-
             column(width = 4,p("histgram"),plotOutput(outputId = "histgram")),
             column(width = 4,p("boxplot"),plotOutput(outputId = "boxplot")),
             column(width = 4,p("violinplot"),plotOutput(outputId = "violinplot")),
-            #column(width = 4,p("heatmap"),plotOutput("heatmap")),
+            column(width = 4,p("heatmap"),plotOutput("heatmap")),
             column(width = 4,p("dotplot"),plotOutput("dotplot")),
             column(width = 4,p("lineplot"),plotOutput("lineplot")),
             column(width = 4,p("barplot"),plotOutput("barplot")),
             column(width = 4,p("stackedbarplot"),plotOutput("stackedbarplot")),
+            column(width = 4,p("facetedplot"),plotOutput("facetedplot")),
+            column(width = 4,p("timeseriesplot"),plotOutput("timeseriesplot")),
             column(width = 4,p("densityplot"),plotOutput("densityplot")),
-            column(width = 4,p("contourplot"),plotly::plotlyOutput(outputId = "contourplot")),
+            column(width = 4,p("contourplot"),plotOutput("contourplot")),
             column(width = 4,p("areaplot"),plotOutput("areaplot")),
-            column(width = 4,p("piechart"),plotOutput("piechart"))
+            column(width = 4,p("piechart"),plotOutput("piechart")),
+            column(width = 4,p("labeledplot"),plotOutput("labeledplot")),
+            column(width = 4,p("volcanoplot"),plotOutput("volcanoplot"))
             )
