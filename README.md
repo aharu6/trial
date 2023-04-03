@@ -1,5 +1,6 @@
 # trial
 テーマ　「ノンプログラムでできる簡単なクリーニングとグラフの描画」
+shinyapps.io :https://qx4iss-aizawa0haruka.shinyapps.io/myapplab/
 
 [更新]
 
