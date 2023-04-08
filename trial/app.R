@@ -1,22 +1,28 @@
 library(shiny)
+library(DT)
+library(shinyAce)
+library(tidyverse)
+library(shinyWidgets)
+library(plotly)
+library(readxl)
 
-ui <- shinyUI(
-  navbarPage("my application",
-             tabPanel("page1",
-                      fluidPage(
-                        title = "render DT options",
-                        sidebarPanel(
-                          p("stateRestore.toggle")
-                        ),
-                        mainPanel(
-                          dataTableOutput(outputId = "table1")
+source(file = file.path("ui_scripts/plotoutputui.R"),local = TRUE)$value
+source(file = file.path("ui_scripts/cleaningui.R"),local = TRUE)$value
+
+ui <- navbarPage("my application",
+             navbarMenu(title = "plotoutput",
+                        tabPanel("cleanig",
+                                 cleaningTab),
+                        tabPanel("plot",
+                                 plotoutputTab)
                         )
-                      )),
-             tabPanel("page2")
   )
-)
-
-
+  
 server <- function(input,output,session){
-  output$table1 <- renderDataTable(datatable(iris))
-}
+  source(file = file.path("server_scripts/plotoutputserver.R"),local = TRUE)$value
+  source(file = file.path("server_scripts/cleanigserver.R"),local = TRUE)$value
+      
+    }
+
+# Run the application 
+shinyApp(ui = ui, server = server)
