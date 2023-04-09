@@ -14,8 +14,10 @@ cleaningTab <-
     uiOutput(outputId = "cleantable2"),
     uiOutput(outputId = "cleantable3"),
     uiOutput(outputId = "cleantable4"),
-    
-  
+    uiOutput(outputId = "cleantable5"),
+    uiOutput(outputId = "cleantable6"),  
+    uiOutput(outputId = "cleantable7"),  
+    uiOutput(outputId = "cleantable8"),
     downloadButton(outputId = "cldatadown",icon = icon("download")),
     p("削除対象の記号：\\+,-,\\*,/,%,=,>,<,!,#,$,&,',\\(,\\),~,^,¥,|,@,`,\\[,\\],\\{,\\},;,:,・,_")
   )

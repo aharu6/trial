@@ -8,7 +8,6 @@ clfile <- reactive({
                      sep = ",",
                      quote = '"') ->cldf,
     "xlsx" = readxl::read_excel(input$dataupload$datapath) -> cldf,
-    "txt" = read.table(input$dataupload$datapath) -> cldf
   )
   return(cldf)
 })
@@ -55,13 +54,37 @@ output$cleantable2 <- renderUI({
 })
 output$cleantable3 <- renderUI({
   req(input$clsentaku == "列を除去する")
-  sliderInput(inputId = "colrange",min = 1,max = ncol(clfile()),value = 2,label = "表示範囲を選択")
+  sliderInput(inputId = "colrange",min = 1,max = ncol(clfile()),value = c(2,3),label = "表示範囲を選択")
 })
 output$cleantable4 <- renderUI({
-  renderTable(clfile()[,1:input$colrange])
+  req(input$clsentaku == "列を除去する")
+  req(input$colrange)
+  renderTable(clfile()[,input$colrange[1]:input$colrange[2]])
 })
-
-  
+output$cleantable5 <- renderUI({
+  req(input$clsentaku == "行を削除する")
+  sliderInput(inputId = "rowrange",min = 1,max = nrow(clfile()),value = c(2,3),label = "表示範囲を選択")
+})
+output$cleantable6 <- renderUI({
+  req(input$clsentaku == "行を削除する")
+  req(input$rowrange)
+  renderTable(clfile()[input$rowrange[1]:input$rowrange[2],])
+  })
+output$cleantable7 <- renderUI({
+  req(input$clsentaku == "右に別ファイルを結合する")
+  fileInput(inputId = "yketsugou",label = "結合する行数は元のファイルに準じます。",buttonLabel = "Browse",placeholder = "csvファイルをアップロード")
+})
+output$cleantable8 <- renderUI({
+  req(input$clsentaku == "右に別ファイルを結合する")
+  req(input$yketsugou)
+  read.csv(input$dataupload$datapath,
+           header = TRUE,
+           sep = ",",
+           quote = '"') ->ykcsv
+  ykcsv[nrow(clfile()),]->ykcsv
+  ykdt <- bind_cols(clfile(),ykcsv)
+  renderTable(ykdt)
+})
 #downloadbottun
 output$cldatadown <- downloadHandler(
   filename = function(){
