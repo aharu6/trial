@@ -72,7 +72,7 @@ output$cleantable6 <- renderUI({
   })
 output$cleantable7 <- renderUI({
   req(input$clsentaku == "右に別ファイルを結合する")
-  fileInput(inputId = "yketsugou",label = "結合する行数は元のファイルに準じます。",buttonLabel = "Browse",placeholder = "csvファイルをアップロード")
+  fileInput(inputId = "yketsugou",label = "結合する行数は元のファイルに依存します。",buttonLabel = "Browse",placeholder = "csvファイルをアップロード")
 })
 output$cleantable8 <- renderUI({
   req(input$clsentaku == "右に別ファイルを結合する")
@@ -84,6 +84,21 @@ output$cleantable8 <- renderUI({
   ykcsv[nrow(clfile()),]->ykcsv
   ykdt <- bind_cols(clfile(),ykcsv)
   renderTable(ykdt)
+})
+output$cleantable9 <- renderUI({
+  req(input$clsentaku == "下に別ファイルを結合する")
+  fileInput(inputId = "tketsugou",label = "結合する列数は元のファイルに依存します。",buttonLabel = "Browse",placeholder = "csvファイルをアップロード")
+})
+output$cleantable10 <- renderUI({
+  req(input$clsentaku == "下に別ファイルを結合する")
+  req(input$tketsugou)
+  read.csv(input$dataupload$datapath,
+           header = TRUE,
+           sep = ",",
+           quote = '"') ->tkcsv
+  tkcsv[ncol(clfile()),]->tkcsv
+  tkdt <- bind_rows(clfile(),tkcsv)
+  renderTable(tkdt)
 })
 #downloadbottun
 output$cldatadown <- downloadHandler(

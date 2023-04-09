@@ -5,9 +5,9 @@ account: qx4iss-aizawa0haruka
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8601678
-bundleId: 7067117
+bundleId: 7067132
 url: https://qx4iss-aizawa0haruka.shinyapps.io/myapplab/
-when: 1681041412.92685
-lastSyncTime: 1681041412.92686
+when: 1681041672.1991
+lastSyncTime: 1681041672.19911
 asMultiple: FALSE
 asStatic: FALSE
