@@ -1,5 +1,4 @@
-#input$dataupload
-#とりあえず、csvファイルだけにしてみる
+#dataupload
 clfile <- reactive({
   req(input$clinput)
   switch (input$clinput,
