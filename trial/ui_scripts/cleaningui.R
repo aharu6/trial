@@ -1,17 +1,20 @@
 cleaningTab <- 
   fluidPage(
-    selectInput(inputId = "clinput",label = "ファイル種類を選択",choices = list("csv","xlsx")),
-    fileInput(inputId = "dataupload",label = p("file upload"),
-              multiple = FALSE,placeholder = "操作する元データをアップロードしてください"),
+    tags$link(rel = "stylesheet",type = "text/css", href = "style.css"),
+    tags$div(class = "clinputtxt",selectInput(inputId = "clinput",label = "ファイル形式を選択",choices = list("csv","xlsx"))),
+    tags$div(class = "datauploadvar",fileInput(inputId = "dataupload",label = p("元データ選択"),
+              multiple = FALSE,placeholder = "操作する元データをアップロードしてください")),
     tags$hr(),
-    h3("summary"),
+    uiOutput(outputId = "h3summary"),
     tableOutput(outputId = "cltable"),
     uiOutput(outputId = "clsummary"),
-    h3("handling"),
+    tags$div(class = "space"),
+    tags$hr(),
+    uiOutput(outputId = "h3handling"),
     uiOutput(outputId =  "clctrl"),
-    downloadButton(outputId = "clctrldwn",icon = icon("download")),
-    h4("オプション"),
-    radioButtons(inputId = "clsentaku",label = "加えたい操作を選択してください",choices = list("記号の削除","全角を半角に","列を除去する","行を削除する","右に別ファイルを結合する","下に別ファイルを結合する")),
+    uiOutput(outputId = "clctrlui"),
+    uiOutput(outputId = "h3option"),
+    uiOutput(outputId = "uiclsentaku"),
     uiOutput(outputId = "cleantable1"),
     uiOutput(outputId = "cleantable2"),
     uiOutput(outputId = "cleantable3"),
@@ -30,5 +33,5 @@ cleaningTab <-
     uiOutput(outputId = "dw4"),
     uiOutput(outputId = "dw5"),
     uiOutput(outputId = "dw6"),
-    p("削除対象の記号：\\+,-,\\*,/,%,=,>,<,!,#,$,&,',\\(,\\),~,^,¥,|,@,`,\\[,\\],\\{,\\},;,:,・,_")
+    uiOutput(outputId = "kigou")
   )

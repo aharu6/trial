@@ -9,13 +9,9 @@ library(readxl)
 source(file = file.path("ui_scripts/plotoutputui.R"),local = TRUE)$value
 source(file = file.path("ui_scripts/cleaningui.R"),local = TRUE)$value
 
-ui <- navbarPage("my application",
-             navbarMenu(title = "plotoutput",
-                        tabPanel("cleanig",
-                                 cleaningTab),
-                        tabPanel("plot",
-                                 plotoutputTab)
-                        )
+ui <- navbarPage(icon("hill-rockslide"),
+             tabPanel(title = "cleaning",cleaningTab),
+             tabPanel(title = "plot",plotoutputTab)
   )
   
 server <- function(input,output,session){

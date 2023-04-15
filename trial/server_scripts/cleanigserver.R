@@ -15,24 +15,51 @@ clfile <- reactive({
 observeEvent(input$clinput,{
   output$table <- renderTable(head(csfile()))
 })
-
+output$h3summary <- renderUI({
+  req(input$dataupload)
+  h3("summary")
+})
 observeEvent(input$dataupload,{
   output$cltable <- renderTable(head(clfile()))
   output$clsummary <- renderUI({HTML(summary(clfile()))})
 })
-#読み込んだテーブルの表示
-  output$clctrl <- renderUI({
+#読み込んだテーブルの表示・ダウンロード
+output$h3handling <- renderUI({
   req(input$dataupload)
-  renderDataTable(datatable(clfile(),filter = "top",options = list(pageLength = 50,
-                                                                   autoFill = TRUE,
-                                                                   responsive = TRUE,
-                                                                   scrollX = TRUE,
-                                                                   autoWidth = TRUE)))
+  h3("handling")
 })
-output$clctrldwn <- downloadHandler({
-  
+output$clctrl <- renderUI({
+req(input$dataupload)
+dataTableOutput(outputId = "cltableout")
 })
+output$cltableout <- renderDataTable(datatable(clfile(),filter = "top",options = list(pageLength = 50,
+                                                                                      responsive = TRUE,
+                                                                                      scrollX = TRUE,
+                                                                                      autoWidth = TRUE)))
+output$clctrlui <- renderUI({
+  req(input$dataupload)
+  downloadButton(outputId = "clctrldwn",icon = icon("download"))
+})
+output$clctrldwn <- downloadHandler(
+  filename = function(){
+    paste("cleandata",Sys.Date(),".csv",sep = "")
+  },
+  content = function(file){
+    r　<- input$cltableout_rows_all
+    write.csv(clfile()[r,],
+              file,
+              fileEncoding = "CP932")
+  }
+)
 #選択した項目ごとの操作
+output$h3option <- renderUI({
+  req(input$dataupload)
+  h4("オプション")
+})
+output$uiclsentaku <- renderUI({
+  req(input$dataupload)
+  radioButtons(inputId = "clsentaku",label = "加えたい操作を選択してください",choices = list("記号の削除","全角を半角に","列を除去する","行を削除する","右に別ファイルを結合する","下に別ファイルを結合する"))
+})
 output$cleantable1 <- renderUI({
   req(input$dataupload)
   req(input$clsentaku =="記号の削除")
@@ -159,7 +186,7 @@ output$cldtdown1 <- downloadHandler(
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-    s <- input$clctrl_rows_all
+     
     write.csv(replacedt,file,
               fileEncoding = "CP932")
   }
@@ -174,7 +201,7 @@ output$cldtdown2 <- downloadHandler(
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-    s <- input$clctrl_rows_all
+     
     write.csv(rpzenkaku,file,
               fileEncoding = "CP932")
   }
@@ -189,7 +216,7 @@ output$cldtdown3 <- downloadHandler(
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-    s <- input$clctrl_rows_all
+     
     write.csv(clfile()[,input$colrange[1]:input$colrange[2]],
               file,
               fileEncoding = "CP932")
@@ -205,7 +232,7 @@ output$cldtdown4 <- downloadHandler(
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-    s <- input$clctrl_rows_all
+     
     write.csv(clfile()[input$rowrange[1]:input$rowrange[2],],
               file,
               fileEncoding = "CP932")
@@ -221,7 +248,7 @@ output$cldtdown5 <- downloadHandler(
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-    s <- input$clctrl_rows_all
+     
     write.csv(ykdt,
               file,
               fileEncoding = "CP932")
@@ -238,9 +265,14 @@ output$cldtdown6 <- downloadHandler(
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-    s <- input$clctrl_rows_all
+     
     write.csv(tkcsv,
               file,
               fileEncoding = "CP932")
   }
 )
+output$kigou <- renderUI({
+  req(input$dataupload)
+  req(input$clsentaku =="記号の削除")
+  p("削除対象の記号：\\+,-,\\*,/,%,=,>,<,!,#,$,&,',\\(,\\),~,^,¥,|,@,`,\\[,\\],\\{,\\},;,:,・,_")
+})

@@ -1,0 +1,28 @@
+body {
+  background-color: #EEEEEE;
+}
+h3 {
+  color: #674747;
+}
+
+.selectize-input{
+  border: #829460;
+  background-color: ##EEEEEE !important;
+}
+.input-group{
+  border: #829460;
+  background-color: ##EEEEEE !important;
+}
+.btn{
+  border: #829460;
+  background-color: ##EEEEEE !important;
+}
+.space{
+  height: 90px;
+}
+.clinputtxt{
+  margin-left: 90px;
+}
+.datauploadvar{
+  margin-left: 90px;
+}

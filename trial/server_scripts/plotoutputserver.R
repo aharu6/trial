@@ -17,32 +17,34 @@ observeEvent(input$file1,{
   output$listy <- renderUI({pickerInput(inputId = "selecty",label = "y軸を選択",choices = colnames(csfile()))})
   output$table <- renderTable(head(csfile()))
 })
+
 output$scatterplot <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+
     geom_point()
 })
 output$histgram <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]]))+
     geom_histogram()
 })
 output$boxplot <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+
     geom_boxplot()
 })
 output$violinplot <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+
     geom_violin()
 })
-#output$heatmap <- renderPlot({
- # req(input$selecty)
-  #colnumeric <-  csfile()[,sapply(csfile(),is.numeric())]
-  #heatmap(as.matrix()[,colnumeric])
-#})
+
 output$dotplot <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+
     geom_dotplot(stackdir = "center",binaxis = "y")
@@ -50,6 +52,7 @@ output$dotplot <- renderPlot({
 })
 #dotplot
 output$dotplot <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+
     geom_dotplot(stackdir = "center",binaxis = "y",binwidth = 0.01)
@@ -57,27 +60,32 @@ output$dotplot <- renderPlot({
 })
 #lineplot
 output$lineplot <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+
     geom_line()
 })
 #barplot
 output$barplot <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+
     geom_bar(stat = "identity",position = "stack")
 })
 output$stackedbarplot <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+
     geom_bar(position = "stack",stat = "identity")
 })
 output$densityplot <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]]))+
     geom_density()
 })
 output$contourplot <- plotly::renderPlotly({
+  req(input$file1)
   req(input$selecty)
   df <- melt(volcano)
   
@@ -87,11 +95,13 @@ output$contourplot <- plotly::renderPlotly({
   ggplotly(p)
 })
 output$areaplot <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+
     geom_area(fill = "blue")
 })
 output$piechart <- renderPlot({
+  req(input$file1)
   req(input$selecty)
   ggplot(iris,aes(x = "",y = csfile()[[input$selecty]]))+
     geom_bar(stat = "identity",width = 1)+
