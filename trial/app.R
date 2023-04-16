@@ -5,11 +5,12 @@ library(tidyverse)
 library(shinyWidgets)
 library(plotly)
 library(readxl)
+library(reshape2)
 
 source(file = file.path("ui_scripts/plotoutputui.R"),local = TRUE)$value
 source(file = file.path("ui_scripts/cleaningui.R"),local = TRUE)$value
 
-ui <- navbarPage(icon("hill-rockslide"),
+ui <- navbarPage(icon("grip"),
              tabPanel(title = "cleaning",cleaningTab),
              tabPanel(title = "plot",plotoutputTab)
   )

@@ -1,9 +1,11 @@
 cleaningTab <- 
   fluidPage(
     tags$link(rel = "stylesheet",type = "text/css", href = "style.css"),
+    h2("Cleaning",class = "cltitle"),
+    tags$div(class = "cltitlespace"),
     tags$div(class = "clinputtxt",selectInput(inputId = "clinput",label = "ファイル形式を選択",choices = list("csv","xlsx"))),
     tags$div(class = "datauploadvar",fileInput(inputId = "dataupload",label = p("元データ選択"),
-              multiple = FALSE,placeholder = "操作する元データをアップロードしてください")),
+              multiple = FALSE,placeholder = "ファイルを選択")),
     tags$hr(),
     uiOutput(outputId = "h3summary"),
     tableOutput(outputId = "cltable"),

@@ -12,7 +12,7 @@ clfile <- reactive({
 })
 
 observeEvent(input$clinput,{
-  output$table <- renderTable(head(csfile()))
+  output$table <- renderTable(head(clfile()))
 })
 output$h3summary <- renderUI({
   req(input$dataupload)

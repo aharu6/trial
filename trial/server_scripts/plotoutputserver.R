@@ -1,26 +1,28 @@
-csfile <-reactive({
-    tryCatch(
-      {
-        df <- read.csv(input$file1$datapath,
-                       header = TRUE,
-                       sep = ",",
-                       quote = '"')
-      },
-      error = function(e) {
-        stop(safeError(e))
-      }
-    )
-    return(df)
-  })
+csfile <- reactive({
+  req(input$filetype)
+  switch (input$filetype,
+          ".csv" = read.csv(input$file1$datapath,
+                           header = TRUE,
+                           sep = ",",
+                           quote = '"') ->df,
+          ".xlsx" = readxl::read_excel(input$file1$datapath) -> df,
+  )
+  return(df)
+})
 observeEvent(input$file1,{
   output$listx <- renderUI({pickerInput(inputId = "selectx",label = "x軸を選択",choices = colnames(csfile()))})
   output$listy <- renderUI({pickerInput(inputId = "selecty",label = "y軸を選択",choices = colnames(csfile()))})
-  output$table <- renderTable(head(csfile()))
+  
 })
+
 #
 output$tablett <- renderText({
   req(input$file1)
   "datatable"})
+output$table1 <- renderTable({
+  req(input$file1)
+  head(csfile())
+  })
 #
 output$scattertt <- renderText({
   req(input$file1)
@@ -63,6 +65,10 @@ output$violinplot <- renderPlot({
 #heat
 output$heatmaptt <- renderText({req(input$file1)
   "heatmap"})
+output$heatmap <- renderPlot({
+  req(input$file1)
+  heatmap(as.matrix(csfile()))
+})
 output$dotplot <- renderPlot({
   req(input$file1)
   req(input$selecty)
@@ -115,11 +121,6 @@ output$stackedbarplot <- renderPlot({
   ggplot(data = csfile(),mapping = aes(x = csfile()[[input$selectx]],y = csfile()[[input$selecty]]))+
     geom_bar(position = "stack",stat = "identity")
 })
-#
-output$facetedplottt <- renderText({
-  req(input$file1)
-  "facetedplot"
-})
 
 #
 output$densityplottt <- renderText({
@@ -140,12 +141,11 @@ output$contourplottt <- renderText({
 output$contourplot <- plotly::renderPlotly({
   req(input$file1)
   req(input$selecty)
-  df <- melt(volcano)
-  
+  df <- melt(csfile())
   p <- ggplot(df, aes(Var1, Var2, z= value)) +
     geom_contour() +
     scale_fill_distiller(palette = "Spectral", direction = -1)
-  ggplotly(p)
+  p
 })
 #
 output$areaplottt <- renderText({
@@ -170,8 +170,10 @@ output$piechart <- renderPlot({
     geom_bar(stat = "identity",width = 1)+
     coord_polar(theta = "y")
 })
+
 #
-output$volcanoplottt <- renderText({
+output$memo <- renderUI({
   req(input$file1)
-  "volcanoplot"
+  h4("memo")
+  p("アップロードしたファイルによっては描画できない場合あり。")
 })
