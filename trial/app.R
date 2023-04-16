@@ -10,7 +10,7 @@ library(reshape2)
 source(file = file.path("ui_scripts/plotoutputui.R"),local = TRUE)$value
 source(file = file.path("ui_scripts/cleaningui.R"),local = TRUE)$value
 
-ui <- navbarPage(icon("grip"),
+ui <- navbarPage(title = icon("grid"),windowTitle = "trial",
              tabPanel(title = "cleaning",cleaningTab),
              tabPanel(title = "plot",plotoutputTab)
   )

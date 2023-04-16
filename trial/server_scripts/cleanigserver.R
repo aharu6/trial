@@ -27,10 +27,12 @@ output$h3handling <- renderUI({
   req(input$dataupload)
   h3("handling")
 })
+
 output$clctrl <- renderUI({
 req(input$dataupload)
 dataTableOutput(outputId = "cltableout")
 })
+
 output$cltableout <- renderDataTable(datatable(clfile(),filter = "top",options = list(pageLength = 50,
                                                                                       responsive = TRUE,
                                                                                       scrollX = TRUE,
@@ -38,18 +40,19 @@ output$cltableout <- renderDataTable(datatable(clfile(),filter = "top",options =
 output$clctrlui <- renderUI({
   req(input$dataupload)
   downloadButton(outputId = "clctrldwn",icon = icon("download"))
+  
 })
 output$clctrldwn <- downloadHandler(
   filename = function(){
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-    r　<- input$cltableout_rows_all
-    write.csv(clfile()[r,],
-              file,
-              fileEncoding = "CP932")
+    cldtrow　<- input$cltableout_rows_all
+    write.csv(clfile()[cldtrow,],
+              file,fileEncoding = "CP932")
   }
 )
+
 #選択した項目ごとの操作
 output$h3option <- renderUI({
   req(input$dataupload)
@@ -215,7 +218,6 @@ output$cldtdown3 <- downloadHandler(
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-     
     write.csv(clfile()[,input$colrange[1]:input$colrange[2]],
               file,
               fileEncoding = "CP932")
@@ -231,7 +233,6 @@ output$cldtdown4 <- downloadHandler(
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-     
     write.csv(clfile()[input$rowrange[1]:input$rowrange[2],],
               file,
               fileEncoding = "CP932")
@@ -264,7 +265,6 @@ output$cldtdown6 <- downloadHandler(
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-     
     write.csv(tkcsv,
               file,
               fileEncoding = "CP932")

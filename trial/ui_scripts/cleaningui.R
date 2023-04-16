@@ -15,6 +15,8 @@ cleaningTab <-
     uiOutput(outputId = "h3handling"),
     uiOutput(outputId =  "clctrl"),
     uiOutput(outputId = "clctrlui"),
+    tags$hr(),
+    tags$div(class = "space"),
     uiOutput(outputId = "h3option"),
     uiOutput(outputId = "uiclsentaku"),
     uiOutput(outputId = "cleantable1"),
