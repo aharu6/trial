@@ -42,12 +42,13 @@ output$clctrlui <- renderUI({
   downloadButton(outputId = "clctrldwn",icon = icon("download"))
   
 })
+
 output$clctrldwn <- downloadHandler(
   filename = function(){
     paste("cleandata",Sys.Date(),".csv",sep = "")
   },
   content = function(file){
-    cldtrow　<- input$cltableout_rows_all
+    cldtrow <- input$cltableout_rows_all
     write.csv(clfile()[cldtrow,],
               file,fileEncoding = "CP932")
   }
